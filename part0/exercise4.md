@@ -1,3 +1,5 @@
+Sequence diagram describing process of submitting a new note on the exampleapp/notes page:
+
 ```mermaid
 sequenceDiagram
     participant browser

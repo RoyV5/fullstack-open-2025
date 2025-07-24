@@ -1,3 +1,6 @@
+Sequence diagram describing process of submitting a note on the page exampleapp/spa:
+
+
 ```mermaid
 
 sequenceDiagram

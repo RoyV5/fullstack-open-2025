@@ -1,3 +1,6 @@
+Sequence diagram describing process of loading the page on exampleapp/spa:
+
+
 ```mermaid
 sequenceDiagram
     participant browser
