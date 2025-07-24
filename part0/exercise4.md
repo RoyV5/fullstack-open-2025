@@ -5,6 +5,7 @@ sequenceDiagram
     participant browser
     participant server
     browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
+        Note right of browser: This request updates the content of the server's JSON file.
     activate server
     server-->>browser: 302 Found: Redirect to /exampleapp/notes
     deactivate server
