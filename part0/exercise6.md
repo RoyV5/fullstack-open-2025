@@ -1,3 +1,5 @@
+```mermaid
+
 sequenceDiagram
     participant browser
     participant server
@@ -6,3 +8,4 @@ sequenceDiagram
     server-->>browser: 201 Created: JSON object of created note
         Note right of browser: The page then incorporates this JSON into the list of notes using JavaScript 
     deactivate server
+```

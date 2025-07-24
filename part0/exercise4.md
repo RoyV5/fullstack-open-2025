@@ -1,3 +1,4 @@
+```mermaid
 sequenceDiagram
     participant browser
     participant server
@@ -27,3 +28,4 @@ sequenceDiagram
     deactivate server
 
     Note right of browser: This last GET retrieves the most recent 100 entries as a JSON file.
+```
