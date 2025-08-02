@@ -1,7 +1,5 @@
 import { useState } from 'react'
 
-
-
 const Button = ({text, handler}) => <button onClick={handler}>{text}</button> 
 
 const StatisticLine = ({text, value}) => {
@@ -41,7 +39,6 @@ const Statistics = ({good, neutral, bad}) => {
     </>
   )
 }
-
 
 const App = () => {
   // save clicks of each button to its own state
