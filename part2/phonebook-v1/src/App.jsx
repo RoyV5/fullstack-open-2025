@@ -3,6 +3,7 @@ import axios from 'axios'
 import Filter from './components/Filter.jsx'
 import PersonForm from './components/PersonForm.jsx'
 import Persons from './components/Persons.jsx'
+import phonebook from './services/phonebook.js'
 
 const App = () => {
 
@@ -13,27 +14,51 @@ const App = () => {
 
 	useEffect(() => {
 		console.log('Fetching initial data...')
-		axios
-		.get('http://localhost:3001/persons')
-		.then(response => {
-			console.log('Data fetched:', response.data)
-			setPersons(response.data)
-		})
+		phonebook.getAll()
+		.then(fetchedPersons => setPersons(fetchedPersons))
 	}, [])
 
-	const handleNewEntry = (event) => {
+	const handleNewEntry = event => {
 		event.preventDefault()
-		if (persons.some(({name}) => name === newName)) {
-			alert(`${newName} already exists in the phonebook`)
+		const existingPerson = persons.find(person => person.name.toLowerCase() === newName.toLowerCase())
+		if (existingPerson) {
+			if (window.confirm(`${newName} already exists in the phonebook, replace the old number with a new one?`)) {
+				phonebook.update(existingPerson.id, {...existingPerson, number: newNumber})
+				.then(updatedPerson => {
+					setPersons(persons.map(person => person.id === updatedPerson.id ? updatedPerson : person ))
+					setNewName('')
+					setNewNumber('')
+				})
+				.catch(error => {
+					console.log('Failed to update person', error)
+				})
+			}
 		} else {			
 			const newObject = {
 				name: newName,
 				number: newNumber,
 			}
-			console.log("New entry", newObject)
-			setPersons(persons.concat(newObject))
-			setNewName('')
-			setNewNumber('')
+			phonebook.create(newObject)
+			.then(newPerson => {
+				setPersons(persons.concat(newPerson))
+				setNewName('')
+				setNewNumber('')
+			}) 
+			.catch(error => {
+				console.log('Failed to add person', error)
+			})
+		}
+	}
+
+	const handleRemove = (name, id) => {
+		if(window.confirm(`Delete the entry ${name}?`)) {
+			phonebook.remove(id)
+				.then(() => {
+					setPersons(persons.filter(person => person.id !== id));
+				})
+				.catch(error => {
+					console.log(error);
+				})
 		}
 	}
 
@@ -50,7 +75,7 @@ const App = () => {
 				setNewNumber={setNewNumber}
 			/>
       <h2>Numbers</h2>
-			<Persons persons={persons} filter={filter} />
+			<Persons persons={persons} filter={filter} handleRemove={handleRemove}/>
     </div>
   )
 }
