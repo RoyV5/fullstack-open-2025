@@ -35,7 +35,6 @@ const Countries = ({ filterString, countries }) => {
 	} 
 
 	else if (matches.length > 10) {
-		console.log(matches)
 		return <p>Too many matches, specify another filter</p>
 	} 
 	
