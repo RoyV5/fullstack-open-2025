@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 import Filter from './components/Filter.jsx'
 import PersonForm from './components/PersonForm.jsx'
 import Persons from './components/Persons.jsx'
+import Notifications from './components/Notifications.jsx'
 import phonebook from './services/phonebook.js'
 
 const App = () => {
@@ -11,6 +11,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
 	const [newNumber, setNewNumber] = useState('')
 	const [filter, setFilter] = useState('')
+	const [notification, setNotification] = useState({ message: null, type: null })
 
 	useEffect(() => {
 		console.log('Fetching initial data...')
@@ -28,9 +29,12 @@ const App = () => {
 					setPersons(persons.map(person => person.id === updatedPerson.id ? updatedPerson : person ))
 					setNewName('')
 					setNewNumber('')
+					setNotification({ message: `Phone number of ${newName} has been mofified to: ${newNumber}`, type: 'success'})
+					setTimeout(() => setNotification({ message: null, type: null}), 5000)
 				})
 				.catch(error => {
-					console.log('Failed to update person', error)
+					setNotification({ message: `${newName} has already been deleted from the phonebook, cannot update. error: ${error.message}`, type: 'error'})
+					setTimeout(() => setNotification({ message: null, type: null}), 5000)
 				})
 			}
 		} else {			
@@ -43,9 +47,12 @@ const App = () => {
 				setPersons(persons.concat(newPerson))
 				setNewName('')
 				setNewNumber('')
+				setNotification({ message: `Entry of ${newName} created succesfully`, type: 'success'})
+				setTimeout(() => setNotification({ message: null, type: null}), 5000)
 			}) 
 			.catch(error => {
-				console.log('Failed to add person', error)
+				setNotification({ message: `Failure to create ${newName} entry, error: ${error.message}`, type: 'error'})
+				setTimeout(() => setNotification({ message: null, type: null}), 5000)
 			})
 		}
 	}
@@ -55,9 +62,12 @@ const App = () => {
 			phonebook.remove(id)
 				.then(() => {
 					setPersons(persons.filter(person => person.id !== id));
+					setNotification({ message: `Entry of ${name} succesfully deleted`, type: 'success'})
+					setTimeout(() => setNotification({ message: null, type: null}), 5000)
 				})
 				.catch(error => {
-					console.log(error);
+					setNotification({ message: `Information of ${name} has already been deleted from phonebook, error: ${error.message}`, type: 'error'})
+					setTimeout(() => setNotification({ message: null, type: null}), 5000)
 				})
 		}
 	}
@@ -65,6 +75,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+			<Notifications notification={notification}/>
 			<Filter filter={filter} setFilter={setFilter} />
 			<h2>Add a new</h2>
 			<PersonForm 
