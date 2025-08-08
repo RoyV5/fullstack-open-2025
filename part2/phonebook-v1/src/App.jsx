@@ -14,7 +14,7 @@ const App = () => {
 	const [notification, setNotification] = useState({ message: null, type: null })
 
 	useEffect(() => {
-		console.log('Fetching initial data...')
+		console.log("Fetching starting data.");
 		phonebook.getAll()
 		.then(fetchedPersons => setPersons(fetchedPersons))
 	}, [])
@@ -71,7 +71,7 @@ const App = () => {
 				})
 		}
 	}
-
+	
   return (
     <div>
       <h2>Phonebook</h2>
