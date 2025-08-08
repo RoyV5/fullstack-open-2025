@@ -4,6 +4,7 @@ const cors = require('cors')
 
 const app = express()
 app.use(express.json())
+app.use(cors())
 morgan.token('body', (request, response) => {
 	if (request.method === 'POST') {
 		return JSON.stringify(request.body)
@@ -38,8 +39,6 @@ let persons = [
     }
 ]
 
-app.get('/')
-
 app.get('/api/persons', (request, response) => {
 	response.json(persons)
 })
@@ -66,11 +65,11 @@ app.get('/api/persons/:id', (request, response) => {
 app.delete('/api/persons/:id', (request, response) => {
 	const id = request.params.id
 	persons = persons.filter(person => person.id !== id)
-	response.status(204).end()
+	response.status(204).json(persons)
 })
 
 app.post('/api/persons/', (request, response) => {
-	const newId = Math.floor(Math.random()*10000)
+	const newId = String(Math.floor(Math.random()*10000))
 	const { name, number } = request.body
 	if (!name || !number) {
 		return response.status(400).json({

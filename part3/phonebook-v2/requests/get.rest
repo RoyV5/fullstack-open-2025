@@ -8,7 +8,7 @@ GET http://localhost:3001/api/persons/1
 GET http://localhost:3001/api/persons/100
 
 ### Delete an entry of the phonebook with ID 1
-DELETE http://localhost:3001/api/persons/1
+DELETE http://localhost:3001/api/persons/4
 
 ### Create new person, valid
 POST http://localhost:3001/api/persons/
