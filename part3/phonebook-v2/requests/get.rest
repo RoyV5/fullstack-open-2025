@@ -27,3 +27,6 @@ Content-Type: application/json
 	"name": "",
 	"number": "607-092564"
 }
+
+### Get info
+GET http://localhost:3001/info/
