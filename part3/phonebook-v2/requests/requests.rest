@@ -1,22 +1,22 @@
 ### Get all persons
 GET http://localhost:3001/api/persons/
 
-### Get person with ID 1
-GET http://localhost:3001/api/persons/1
+### Get person with given ID 
+GET http://localhost:3001/api/persons/6898d2c9f42267dc3f300f0a
 
 ### Get non existent person
 GET http://localhost:3001/api/persons/100
 
-### Delete an entry of the phonebook with ID 1
-DELETE http://localhost:3001/api/persons/4
+### Delete an entry of the phonebook with given ID
+DELETE http://localhost:3001/api/persons/
 
 ### Create new person, valid
 POST http://localhost:3001/api/persons/
 Content-Type: application/json
 
 {
-	"name": "Rodrigo Olmos",
-	"number": "607-092564"
+	"name": "Alessandra Percoco",
+	"number": "424-1073438"
 }
 
 ### Create new person, invalid
@@ -30,3 +30,12 @@ Content-Type: application/json
 
 ### Get info
 GET http://localhost:3001/info/
+
+### Modify person
+PUT http://localhost:3001/api/persons/6898e1cd3c42323efea346a2
+Content-Type: application/json
+
+{
+	"name": "Alessandra Percoco",
+	"number": "424-5557738"
+}
