@@ -29,11 +29,11 @@ const App = () => {
 					setPersons(persons.map(person => person.id === updatedPerson.id ? updatedPerson : person ))
 					setNewName('')
 					setNewNumber('')
-					setNotification({ message: `Phone number of ${newName} has been mofified to: ${newNumber}`, type: 'success'})
+					setNotification({ message: `Phone number of ${newName} has been modified to: ${newNumber}`, type: 'success'})
 					setTimeout(() => setNotification({ message: null, type: null}), 5000)
 				})
 				.catch(error => {
-					setNotification({ message: `${newName} has already been deleted from the phonebook, cannot update. error: ${error.message}`, type: 'error'})
+					setNotification({ message: `Entry of ${newName} couldn't be updated: ${error.message}`, type: 'error'})
 					setTimeout(() => setNotification({ message: null, type: null}), 5000)
 				})
 			}
@@ -51,7 +51,7 @@ const App = () => {
 				setTimeout(() => setNotification({ message: null, type: null}), 5000)
 			}) 
 			.catch(error => {
-				setNotification({ message: `Failure to create ${newName} entry, error: ${error.message}`, type: 'error'})
+				setNotification({ message: `Couldn't create new person: "${newName}". ${error.message}`, type: 'error'})
 				setTimeout(() => setNotification({ message: null, type: null}), 5000)
 			})
 		}
@@ -66,7 +66,7 @@ const App = () => {
 					setTimeout(() => setNotification({ message: null, type: null}), 5000)
 				})
 				.catch(error => {
-					setNotification({ message: `Information of ${name} has already been deleted from phonebook, error: ${error.message}`, type: 'error'})
+					setNotification({ message: `Information of ${name} has already been deleted from phonebook, ${error.message}`, type: 'error'})
 					setTimeout(() => setNotification({ message: null, type: null}), 5000)
 				})
 		}

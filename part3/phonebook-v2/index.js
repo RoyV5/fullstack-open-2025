@@ -50,16 +50,18 @@ app.delete('/api/persons/:id', (request, response, next) => {
 	.catch(error => next(error))
 })
 
-app.post('/api/persons/', (request, response) => {	
+app.post('/api/persons/', (request, response, next) => {	
 	const body = request.body
 	const {name, number} = body
 	const newPerson = new Person({
 		name: name,
 		number: number,
 	})
-	newPerson.save().then(person => {
+	newPerson.save()
+	.then(person => {
 		response.json(person)
 	})
+	.catch(error => next(error))
 })
 
 app.put('/api/persons/:id', (request, response, next) => {
@@ -71,6 +73,7 @@ app.put('/api/persons/:id', (request, response, next) => {
 		} else {
 			person.name = name
 			person.number = number
+			person.validateSync()
 			return person.save().then((updatedPerson) => {
 				response.json(updatedPerson)
 			})
@@ -88,15 +91,20 @@ app.use(unknownEndpoint)
 const errorHandler = (error, request, response, next) => {
   console.error(error.message)
   if (error.name === 'CastError') {
-    return response.status(400).send({ error: 'malformatted id' })
-  } 
+    return response.status(400).json({ error: 'malformatted id' })
+  } else if (error.name === 'ValidationError') {
+  const messages = Object.values(error.errors).map(e => e.message)
+  response.status(400).json({ errors: messages })
+}else if (error.code === 11000) {
+		return (response.status(409).json({error: 'Person already exists in phonebook'}))
+	}
+
   next(error)
 }
 
-// this has to be the last loaded middleware, also all the routes should be registered before this!
 app.use(errorHandler) 
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
 	console.log(`Server running on port: ${PORT}`);
 })

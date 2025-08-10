@@ -24,18 +24,18 @@ POST http://localhost:3001/api/persons/
 Content-Type: application/json
 
 {
-	"name": "",
-	"number": "607-092564"
+	"name": "Rodrigo",
+	"number": "12-092564"
 }
 
 ### Get info
 GET http://localhost:3001/info/
 
 ### Modify person
-PUT http://localhost:3001/api/persons/6898e1cd3c42323efea346a2
+PUT http://localhost:3001/api/persons/6898fae446b5a8627a282623
 Content-Type: application/json
 
 {
-	"name": "Alessandra Percoco",
+	"name": "Aa",
 	"number": "424-5557738"
 }

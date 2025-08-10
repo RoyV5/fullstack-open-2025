@@ -20,8 +20,10 @@ const create = async newObject => {
     const response = await axios.post(baseUrl, newObject)
     return response.data
   } catch (error) {
-    console.error('Failed to create person:', error.message)
-    throw error  // re-throw if you want component to handle it
+    console.error('Failed to create person:', error)
+		const errors = error.response?.data?.errors
+		const parsedError = Array.isArray(errors) ? errors.join(', ') : (error.response?.data?.error || 'Unknown error')
+    throw new Error(parsedError)
   }
 }
 
@@ -30,8 +32,9 @@ const update = async (id, newObject) => {
     const response = await axios.put(`${baseUrl}/${id}`, newObject)
     return response.data
   } catch (error) {
-    console.error(`Failed to update person ${id}:`, error.message)
-    throw error
+		const errors = error.response?.data?.errors
+		const parsedError = Array.isArray(errors) ? errors.join(', ') : (error.response?.data?.error || 'Unknown error')
+    throw new Error(parsedError)
   }
 }
 
