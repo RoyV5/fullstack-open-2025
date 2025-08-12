@@ -1,0 +1,36 @@
+### GET all blogs
+GET http://localhost:3001/api/blogs
+
+### POST requests
+### First post
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+  "title": "Understanding REST APIs",
+  "author": "Rodrigo Pérez",
+  "url": "https://example.com/rest-api",
+  "likes": 42
+}
+
+### Second post
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+  "title": "Minimalist JavaScript",
+  "author": "Jane Doe",
+  "url": "https://minimal.js.org",
+  "likes": 0
+}
+
+### Third post
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+  "title": "How I Built a Game Engine",
+  "author": "GameDevGuru",
+  "url": "https://gamedev.example/blog/engine",
+  "likes": 1287
+}
